@@ -1,0 +1,421 @@
+{
+  "id": "com.sdn.plextv-playlist-caster",
+  "version": "1.0.0",
+  "compatibility": ">=1.5.0",
+  "sdk": 2,
+  "name": {
+    "en": "PlexTV Playlist Caster",
+    "de": "PlexTV Playlist Caster"
+  },
+  "description": {
+    "en": "Plays PlexTV Playlists on Chromecast devices.",
+    "de": "Spielt PlexTV Playlists auf Chromecast Geräten."
+  },
+  "category": [
+    "tools"
+  ],
+  "permissions": [],
+  "images": {
+    "large": "/assets/images/large.png",
+    "small": "/assets/images/small.png"
+  },
+  "author": {
+    "name": "Thomas Hebendanz",
+    "email": "thomas.hebendanz@googlemail.com"
+  },
+  "flow": {
+    "triggers": [
+      {
+        "id": "new_item_playing",
+        "title": {
+          "en": "A new item is playing",
+          "de": "Eine neues Element wird abgespielt"
+        },
+        "hint": {
+          "en": "Fired for any element played.",
+          "de": "Wird für jedes gespielte Element ausgelöst."
+        },
+        "tokens": [
+          {
+            "name": "ccp_name",
+            "type": "string",
+            "title": {
+              "en": "Chromecast Device Name",
+              "de": "Chromecast Gerätename"
+            }
+          },
+          {
+            "name": "item_title",
+            "type": "string",
+            "title": {
+              "en": "Title",
+              "de": "Titel"
+            }
+          }
+        ]
+      },
+      {
+        "id": "new_music_playing",
+        "title": {
+          "en": "A music track is playing",
+          "de": "Eine Musikstück wird abgespielt"
+        },
+        "tokens": [
+          {
+            "name": "ccp_name",
+            "type": "string",
+            "title": {
+              "en": "Chromecast Device Name",
+              "de": "Chromecast Gerätename"
+            }
+          },
+          {
+            "name": "item_title",
+            "type": "string",
+            "title": {
+              "en": "Title",
+              "de": "Titel"
+            }
+          },
+          {
+            "name": "album",
+            "type": "string",
+            "title": {
+              "en": "Album",
+              "de": "Album"
+            }
+          },
+          {
+            "name": "artist",
+            "type": "string",
+            "title": {
+              "en": "Artist",
+              "de": "Künstler"
+            }
+          }
+        ]
+      },
+      {
+        "id": "new_movie_playing",
+        "title": {
+          "en": "A movie is playing",
+          "de": "Eine Film wird abgespielt"
+        },
+        "tokens": [
+          {
+            "name": "ccp_name",
+            "type": "string",
+            "title": {
+              "en": "Chromecast Device Name",
+              "de": "Chromecast Gerätename"
+            }
+          },
+          {
+            "name": "item_title",
+            "type": "string",
+            "title": {
+              "en": "Title",
+              "de": "Titel"
+            }
+          },
+          {
+            "name": "orig_title",
+            "type": "string",
+            "title": {
+              "en": "Original Title",
+              "de": "Original Titel"
+            }
+          },
+          {
+            "name": "studio",
+            "type": "string",
+            "title": {
+              "en": "Studio",
+              "de": "Studio"
+            }
+          }
+        ]
+      },
+      {
+        "id": "new_episode_playing",
+        "title": {
+          "en": "An episode is playing",
+          "de": "Eine Folge wird abgespielt"
+        },
+        "tokens": [
+          {
+            "name": "ccp_name",
+            "type": "string",
+            "title": {
+              "en": "Chromecast Device Name",
+              "de": "Chromecast Gerätename"
+            }
+          },
+          {
+            "name": "item_title",
+            "type": "string",
+            "title": {
+              "en": "Title",
+              "de": "Titel"
+            }
+          },
+          {
+            "name": "series_title",
+            "type": "string",
+            "title": {
+              "en": "Series",
+              "de": "Serie"
+            }
+          },
+          {
+            "name": "season",
+            "type": "number",
+            "title": {
+              "en": "Season #",
+              "de": "Staffel #"
+            }
+          },
+          {
+            "name": "episode",
+            "type": "number",
+            "title": {
+              "en": "Episode #",
+              "de": "Folge #"
+            }
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "ccp_state_check",
+        "duration": false,
+        "title": {
+          "en": "Chromecast Status is..",
+          "de": "Der Status des Chromecast ist.."
+        },
+        "titleFormatted": {
+          "en": "Chromecast [[player]] Status !{{is|isn't}} [[probe_status]]",
+          "de": "Der Status des Chromecast [[player]] !{{ist|ist nicht}} [[probe_status]]"
+        },
+        "args": [
+          {
+            "name": "player",
+            "title": {
+              "en": "Player",
+              "de": "Player"
+            },
+            "type": "autocomplete"
+          },
+          {
+            "type": "dropdown",
+            "name": "probe_status",
+            "title": {
+              "en": "Which status to probe for?",
+              "de": "Auf welchen Zustand prüfen?"
+            },
+            "values": [
+              {
+                "id": "PLAYING",
+                "label": {
+                  "en": "Playing",
+                  "de": "Spielt"
+                }
+              },
+              {
+                "id": "PAUSED",
+                "label": {
+                  "en": "Paused",
+                  "de": "Pausiert"
+                }
+              },
+              {
+                "id": "IDLE",
+                "label": {
+                  "en": "Idling",
+                  "de": "Tut nichts"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "play_plex_playlist",
+        "duration": false,
+        "title": {
+          "en": "Play PlexTV Playlist on Chromecast",
+          "de": "PlexTV Playlist auf Chromecast abspielen"
+        },
+        "args": [
+          {
+            "name": "playlist",
+            "title": {
+              "en": "Playlist",
+              "de": "Playlist"
+            },
+            "type": "autocomplete"
+          },
+          {
+            "name": "player",
+            "title": {
+              "en": "Player",
+              "de": "Player"
+            },
+            "type": "autocomplete"
+          },
+          {
+            "type": "dropdown",
+            "name": "shuffle",
+            "title": {
+              "en": "Shuffle List?",
+              "de": "Zufällig Sortieren?"
+            },
+            "values": [
+              {
+                "id": "REPEAT_ALL_AND_SHUFFLE",
+                "label": {
+                  "en": "Yes",
+                  "de": "Ja"
+                }
+              },
+              {
+                "id": "REPEAT_ALL",
+                "label": {
+                  "en": "No",
+                  "de": "Nein"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "send_cc_command",
+        "duration": false,
+        "title": {
+          "en": "Send a Command to Chromecast",
+          "de": "Ein Kommando an Chromecast senden"
+        },
+        "args": [
+          {
+            "name": "player",
+            "title": {
+              "en": "Player",
+              "de": "Player"
+            },
+            "type": "autocomplete"
+          },
+          {
+            "type": "dropdown",
+            "name": "command",
+            "title": {
+              "en": "Command",
+              "de": "Kommando"
+            },
+            "values": [
+              {
+                "id": "NEXT",
+                "label": {
+                  "en": "Next",
+                  "de": "Nächster"
+                }
+              },
+              {
+                "id": "PREV",
+                "label": {
+                  "en": "Previous",
+                  "de": "Vorheriger"
+                }
+              },
+              {
+                "id": "PAUSE",
+                "label": {
+                  "en": "Pause",
+                  "de": "Pause"
+                }
+              },
+              {
+                "id": "PAUSE_OR_RESUME",
+                "label": {
+                  "en": "Pause/Resume",
+                  "de": "Pause/Fortsetzen"
+                }
+              },
+              {
+                "id": "PLAY",
+                "label": {
+                  "en": "Play",
+                  "de": "Play"
+                }
+              },
+              {
+                "id": "STOP",
+                "label": {
+                  "en": "Stop",
+                  "de": "Stop"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "capabilities": {
+    "plex_playlist": {
+      "type": "enum",
+      "title": {
+        "en": "PlexTV Playlist",
+        "de": "PlexTV Playlist"
+      },
+      "uiComponent": "picker",
+      "getable": true,
+      "setable": true,
+      "values": [ ]
+    }
+  },
+  "drivers": [
+    {
+      "id": "ccpp",
+      "name": {
+        "en": "Chromecast PlexTV Player",
+        "de": "Chromecast PlexTV Player"
+      },
+      "class": "speaker",
+      "capabilities": [
+        "speaker_playing",
+        "speaker_next",
+        "speaker_prev",
+        "speaker_shuffle",
+        "speaker_artist",
+        "speaker_album",
+        "speaker_track",
+        "speaker_duration",
+        "speaker_position"
+      ],
+      "images": {
+        "large": "/drivers/ccpp/assets/images/large.png",
+        "small": "/drivers/ccpp/assets/images/small.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          },
+          "options": {
+            "singular": false
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ]
+    }
+  ]
+}

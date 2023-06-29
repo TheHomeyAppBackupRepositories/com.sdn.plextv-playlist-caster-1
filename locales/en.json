@@ -1,0 +1,55 @@
+{
+  "updateInfos": {
+    "1_5_0": "New since v1.5.0: Support for playlists >100 items.",
+    "common": "Please include your email address when submitting diagnostic reports so I can get back to you about the issue."
+  },
+  "settings": {
+    "globals": "Plex Account Settings",
+    "saveSettings": "Save Settings",
+    "infoSettingsSaved": "Settings saved.",
+    "errorSaving": "Error occured saving settings!",
+    "plexUser": "Plex Username",
+    "plexPass": "Plex Password",
+    "authplexnow": "Authenticate",
+    "credInfo": "This useful if you accidently removed this Homey client from your account and do not want to repair your devices. Your credentials are not saved. They are only used to authenticate against https://plex.tv to aquire a client access token. This app will then appear in your server's authorized devices list.",
+    "ignoreInfo": "Ignored servers will be excluded from device pairing and status polling.",
+    "step1": "Manually login to Plex anew",
+    "step2": "Optionally select servers to ignore",
+    "apiAccess": "3rd Party API Access",
+    "apiAccessInfo": "Warning: This will expose your Plex access token of this app to the consuming app. The token is included in the source file address to enable access to it. Enable if you trust the consuming app only.",
+    "allowApiAccess": "Allow API Access",
+    "plexServer": "Server",
+    "plexServerStatus": "Status",
+    "plexServerIgnore": "Ignored?",
+    "plexOwned": "Owned",
+    "noServer": "No Server Selected",
+    "noServerError": "Please select a server!"
+  },
+  "inAppErrors": {
+    "noClientError": "No client! Cannot control things we did not trigger.",
+    "authFailed": "Authentication failed!",
+    "authSucess": "Authentication successful!",
+    "noServer": "No server reachable! Is your Plex account/server configured properly?",
+    "noPlaylists": "Could not find any playlists! Is your Plex account/server configured properly?",
+    "noServerReachable": "Server is not reachable!",
+    "cannotGetPl": "Cannot retrieve playlist! Is the Plex account/server configured correctly?",
+    "cannotIdPl": "Cannot identify current playlist! Playlist deleted? Server offline?"
+  },
+  "api": {
+    "errUnknownCall": "Unknown api call!",
+    "yes": "Yes",
+    "no": "No",
+    "srvIgnored": "Ignored",
+    "srvOffline": "Offline",
+    "srvInt": "Local Connection",
+    "srvExt": "External Connection"
+  },
+  "labels": {
+    "video": "Video: ",
+    "audio": "Audio: ",
+    "server": "Server"
+  },
+  "driver": {
+    "group": "Group: "
+  }
+}

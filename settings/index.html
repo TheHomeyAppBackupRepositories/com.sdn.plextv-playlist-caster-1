@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+    <head>
+	    <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+    </head>
+    <body>
+        <h1 data-i18n="settings.globals"></h1>
+        <fieldset>
+          <legend data-i18n="settings.step1"></legend>
+          <p data-i18n="settings.credInfo"></p>
+          <div class="field row">
+            <label for="plexUser" data-i18n="settings.plexUser"></label>
+            <input id="plexUser" type="text" value="" />
+          </div>
+          <div class="field row">
+            <label for="plexPass" data-i18n="settings.plexPass"></label>
+            <input id="plexPass" type="password" value="" />
+          </div>
+          <div class="field row" align="right">
+            <br/>
+            <button id="authplexnow" class="right" data-i18n="settings.authplexnow"></button>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend data-i18n="settings.apiAccess"></legend>
+          <p data-i18n="settings.apiAccessInfo"></p>
+          <div class="field row; table-layout:auto;">
+            <label for="allowApiAccess" data-i18n="settings.allowApiAccess"></label>
+            <input id="allowApiAccess" type="checkbox" />
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend data-i18n="settings.step2"></legend>
+          <p data-i18n="settings.ignoreInfo"></p>
+          <div class="field row; table-layout:auto;">
+            <table style="width=100%; font-size:small;" id="serverlist">
+              <tr style="width:100%;">
+                <th data-i18n="settings.plexServer" style="width:30%;"></th>
+                <th data-i18n="settings.plexOwned" style="width:30%;"></th>
+                <th data-i18n="settings.plexServerStatus" style="width:30%;"></th>
+                <th data-i18n="settings.plexServerIgnore" style="width:10%;"></th>
+              </tr>
+            </table>
+          </div>
+        </fieldset>
+        <script type="text/javascript">
+        function refreshServers(){
+          var deviceTable = document.getElementById('serverlist');
+          Homey.api('GET', '/getServers', null, function( err, deviceInfoArray ) {
+            if( err ) return Homey.alert( err );
+            deviceInfoArray.forEach(function (device) {
+              var findRow = document.getElementById(`${device.data.id}_entry`);
+              if (findRow) {
+                findRow.cells[0].innerHTML = device.name;
+                findRow.cells[1].innerHTML = device.data.owner;
+                findRow.cells[2].innerHTML = device.statusHR;
+                var findIgBox = document.getElementById(`${device.data.id}`);
+                findIgBox.checked = (device.data.status == 'IGNORED') ? true : false;
+              } else {
+                var newRow = deviceTable.insertRow(1);
+                newRow.id = `${device.data.id}_entry`;
+                var cellName = newRow.insertCell(0);
+                cellName.innerHTML = device.name;
+                var cellOwner = newRow.insertCell(1);
+                cellOwner.innerHTML = device.data.owner;
+                var cellStatus = newRow.insertCell(2);
+                cellStatus.innerHTML = device.statusHR;
+                var cellIgnore = newRow.insertCell(3);
+                var newIgBox = document.createElement('input');
+                newIgBox.type = "checkbox";
+                newIgBox.id = `${device.data.id}`;
+                cellIgnore.appendChild(newIgBox);
+                newIgBox.checked = (device.data.status == 'IGNORED') ? true : false;
+                // Append event
+                newIgBox.addEventListener('change', (event) => {
+                  let request_data = {
+                    id: event.target.id,
+                    checked: event.target.checked
+                  }
+                  Homey.api('POST', '/updateIgnore', request_data, function( err, responseData ) {
+                    if( err ) {
+                      return Homey.alert( err );
+                    } else {
+                      refreshServers();
+                    }
+                  });
+                });
+              }
+            });
+          });
+        }
+        function onHomeyReady( Homey ){
+          var authplexnowElement = document.getElementById('authplexnow');
+
+          var allowApiAccessElement = document.getElementById('allowApiAccess');
+          Homey.get('apiEnabled', function( err, apiOn ) {
+            if( err ) return Homey.alert( err );
+            allowApiAccessElement.checked = apiOn;
+          });
+          allowApiAccessElement.addEventListener('change', (event) => {
+            Homey.set('apiEnabled', allowApiAccessElement.checked, function( err ){
+		          if( err ) return Homey.alert( err );
+	          });
+          });
+
+          refreshServers();
+
+          authplexnowElement.addEventListener('click', function(e) {
+            var userElement = document.getElementById('plexUser');
+            var passElement = document.getElementById('plexPass');
+            var bodyParts = {
+              user: userElement.value,
+              pass: passElement.value
+            };
+            Homey.api('POST', '/authPlex', bodyParts, function( err, responseData ) {
+              if( err ) {
+                return Homey.alert( err );
+              } else {
+                Homey.alert(responseData, 'info');
+                refreshServers();
+              }
+            });
+	        });
+
+          Homey.ready();
+        }
+        </script>
+    </body>
+</html>

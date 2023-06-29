@@ -1,0 +1,55 @@
+{
+  "updateInfos": {
+    "1_5_0": "New since v1.5.0: Unterstützung für Wiedergabelisten mit mehr als 100 Einträgen.",
+    "common": "Bitte gib bei Diganose Reports eine Email Adresse an damit ich mich bei dir dazu melden kann."
+  },
+  "settings": {
+    "globals": "Plex Konto Einstellungen",
+    "saveSettings": "Einstellungen Speichern",
+    "infoSettingsSaved": "Einstellungen gespeichert.",
+    "errorSaving": "Fehler beim Speichern der Einstellungen!",
+    "plexUser": "Plex Benutzername",
+    "plexPass": "Plex Passwort",
+    "authplexnow": "Authentifizieren",
+    "credInfo": "Dies ist nützlich falls sie versehens diesen Homey Klient aus Ihrem Plex Konto gelöscht haben und die Server nicht neu hinzufügen wollen. Die Login Daten werden nicht gespeichert. Sie werden nur zum Authentifizieren gegen https://plex.tv benötigt um einen Zugangstoken zu erzeugen. Diese App wird als authentifiziertes Gerät in Plex Server angezeigt.",
+    "ignoreInfo": "Ignorierte Server sind vom Geräte Hinzufügen und von zyklischen Status Abfragen ausgeschlossen.",
+    "step1": "Manuell an Plex neu Anmelden",
+    "step2": "Optional: Wähle Server die ignoriert werden sollen",
+    "apiAccess": "API Zugriff durch Dritte",
+    "apiAccessInfo": "Warnung: Dies macht den Plex Zugangstoken, für die abrufende Anwendung sichtbar. Der Token wird der Dateiquelle mitgegeben um den Zugriff zu gewähren. Aktivieren sie dies nur wenn sie der abrufenden Anwendung trauen.",
+    "allowApiAccess": "Allow API Access",
+    "plexServer": "Server",
+    "plexServerStatus": "Status",
+    "plexServerIgnore": "Ignoriert?",
+    "plexOwned": "Eigener",
+    "noServer": "Kein Server ausgewählt",
+    "noServerError": "Bitte Server auswählen!"
+  },
+  "inAppErrors": {
+    "noClientError": "Kein Klient! Kann nichts steuern was ich nicht gestartet habe.",
+    "authFailed": "Authentifizierung fehlgeschlagen!",
+    "authSucess": "Authentifizierung erfolgreich!",
+    "noServer": "Kein Server erreichbar! Ist der Plex Account/Server korrekt konfiguriert?",
+    "noPlaylists": "Konnte keine Playslisten finden! Ist der Plex Account/Server korrekt konfiguriert?",
+    "noServerReachable": "Server ist nicht erreichbar!",
+    "cannotGetPl": "Kann Playlist nicht laden! Ist der Plex Account/Server korrekt konfiguriert?",
+    "cannotIdPl": "Kann aktuelle Playlist nicht identifizieren! Existiert nicht mehr? Server offline?"
+  },
+  "api": {
+    "errUnknownCall": "Unbekannter API Aufruf!",
+    "yes": "Ja",
+    "no": "Nein",
+    "srvIgnored": "Ignoriert",
+    "srvOffline": "Offline",
+    "srvInt": "Lokale Verbindung",
+    "srvExt": "Remote Verbindung"
+  },
+  "labels": {
+    "video": "Video: ",
+    "audio": "Audio: ",
+    "server": "Server"
+  },
+  "driver": {
+    "group": "Gruppe: "
+  }
+}
